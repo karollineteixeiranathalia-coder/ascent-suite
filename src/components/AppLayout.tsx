@@ -68,3 +68,35 @@ export function AppLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+type NavItem = { to: string; label: string; icon: typeof LayoutDashboard };
+
+function NavGroup({ items, path, label }: { items: NavItem[]; path: string; label?: string }) {
+  return (
+    <div className="space-y-1">
+      {label && (
+        <div className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+          {label}
+        </div>
+      )}
+      {items.map((item) => {
+        const active = item.to === "/" ? path === "/" : path.startsWith(item.to);
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+              active
+                ? "bg-accent text-accent-foreground font-medium"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+            }`}
+          >
+            <Icon className="w-4 h-4" />
+            {item.label}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
