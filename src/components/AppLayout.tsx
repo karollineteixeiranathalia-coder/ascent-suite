@@ -47,25 +47,10 @@ export function AppLayout({ children }: { children: ReactNode }) {
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-semibold">A</div>
           <span className="font-semibold tracking-tight">Assess</span>
         </div>
-        <nav className="flex-1 p-3 space-y-1">
-          {nav.map((item) => {
-            const active = item.to === "/" ? path === "/" : path.startsWith(item.to);
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                  active
-                    ? "bg-accent text-accent-foreground font-medium"
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {item.label}
-              </Link>
-            );
-          })}
+        <nav className="flex-1 p-3 space-y-4 overflow-y-auto">
+          <NavGroup items={navMain} path={path} />
+          <NavGroup label="Espaço de trabalho" items={navWorkspace} path={path} />
+          <NavGroup label="Sistema" items={navSystem} path={path} />
         </nav>
         <div className="p-3 border-t border-sidebar-border">
           <button
