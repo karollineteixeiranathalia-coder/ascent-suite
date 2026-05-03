@@ -1,6 +1,6 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { LayoutDashboard, Users, FolderKanban, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -8,7 +8,7 @@ const nav = [
   { to: "/projetos", label: "Projetos", icon: FolderKanban },
 ];
 
-export function AppLayout() {
+export function AppLayout({ children }: { children: ReactNode }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const [dark, setDark] = useState(false);
 
@@ -65,7 +65,7 @@ export function AppLayout() {
         </div>
       </aside>
       <main className="flex-1 min-w-0">
-        <Outlet />
+        {children}
       </main>
     </div>
   );
