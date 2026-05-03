@@ -1,11 +1,24 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, FolderKanban, Moon, Sun } from "lucide-react";
+import { LayoutDashboard, Users, FolderKanban, Moon, Sun, CheckSquare, BarChart3, Calendar, FileText, Bell, Settings, UsersRound } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 
-const nav = [
+const navMain = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/leads", label: "Leads", icon: Users },
   { to: "/projetos", label: "Projetos", icon: FolderKanban },
+  { to: "/tarefas", label: "Tarefas", icon: CheckSquare },
+  { to: "/agenda", label: "Agenda", icon: Calendar },
+];
+
+const navWorkspace = [
+  { to: "/equipe", label: "Equipe", icon: UsersRound },
+  { to: "/relatorios", label: "Relatórios", icon: BarChart3 },
+  { to: "/documentos", label: "Documentos", icon: FileText },
+];
+
+const navSystem = [
+  { to: "/notificacoes", label: "Notificações", icon: Bell },
+  { to: "/configuracoes", label: "Configurações", icon: Settings },
 ];
 
 export function AppLayout({ children }: { children: ReactNode }) {
