@@ -1,11 +1,24 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, FolderKanban, Moon, Sun } from "lucide-react";
+import { LayoutDashboard, Users, FolderKanban, Moon, Sun, CheckSquare, BarChart3, Calendar, FileText, Bell, Settings, UsersRound } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 
-const nav = [
+const navMain = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/leads", label: "Leads", icon: Users },
   { to: "/projetos", label: "Projetos", icon: FolderKanban },
+  { to: "/tarefas", label: "Tarefas", icon: CheckSquare },
+  { to: "/agenda", label: "Agenda", icon: Calendar },
+];
+
+const navWorkspace = [
+  { to: "/equipe", label: "Equipe", icon: UsersRound },
+  { to: "/relatorios", label: "Relatórios", icon: BarChart3 },
+  { to: "/documentos", label: "Documentos", icon: FileText },
+];
+
+const navSystem = [
+  { to: "/notificacoes", label: "Notificações", icon: Bell },
+  { to: "/configuracoes", label: "Configurações", icon: Settings },
 ];
 
 export function AppLayout({ children }: { children: ReactNode }) {
@@ -34,25 +47,10 @@ export function AppLayout({ children }: { children: ReactNode }) {
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-semibold">A</div>
           <span className="font-semibold tracking-tight">Assess</span>
         </div>
-        <nav className="flex-1 p-3 space-y-1">
-          {nav.map((item) => {
-            const active = item.to === "/" ? path === "/" : path.startsWith(item.to);
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                  active
-                    ? "bg-accent text-accent-foreground font-medium"
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {item.label}
-              </Link>
-            );
-          })}
+        <nav className="flex-1 p-3 space-y-4 overflow-y-auto">
+          <NavGroup items={navMain} path={path} />
+          <NavGroup label="Espaço de trabalho" items={navWorkspace} path={path} />
+          <NavGroup label="Sistema" items={navSystem} path={path} />
         </nav>
         <div className="p-3 border-t border-sidebar-border">
           <button
@@ -67,6 +65,38 @@ export function AppLayout({ children }: { children: ReactNode }) {
       <main className="flex-1 min-w-0">
         {children}
       </main>
+    </div>
+  );
+}
+
+type NavItem = { to: string; label: string; icon: typeof LayoutDashboard };
+
+function NavGroup({ items, path, label }: { items: NavItem[]; path: string; label?: string }) {
+  return (
+    <div className="space-y-1">
+      {label && (
+        <div className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+          {label}
+        </div>
+      )}
+      {items.map((item) => {
+        const active = item.to === "/" ? path === "/" : path.startsWith(item.to);
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+              active
+                ? "bg-accent text-accent-foreground font-medium"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+            }`}
+          >
+            <Icon className="w-4 h-4" />
+            {item.label}
+          </Link>
+        );
+      })}
     </div>
   );
 }
