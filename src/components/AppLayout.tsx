@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 
 const navMain = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/leads", label: "Leads", icon: Users },
+  { to: "/leads", label: "sid", icon: Users },
   { to: "/projetos", label: "Projetos", icon: FolderKanban },
   { to: "/tarefas", label: "Tarefas", icon: CheckSquare },
   { to: "/agenda", label: "Agenda", icon: Calendar },
